@@ -11,4 +11,7 @@ dependencies = [
     "openai>=2.41.1",
     "python-dotenv>=1.2.2",
     "requests>=2.34.2",
+    "graphviz>=0.21",
+    "streamlit>=1.48.0",
+    "openai-agents>=0.17.5",
 ]
