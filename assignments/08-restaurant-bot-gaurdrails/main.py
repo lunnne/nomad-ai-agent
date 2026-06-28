@@ -383,7 +383,8 @@ st.markdown(
     """
     <style>
     .stApp {
-        background: #f7f8f5;
+        background: #faf9f6;
+        color: #20231f;
     }
 
     [data-testid="stHeader"] {
@@ -391,42 +392,53 @@ st.markdown(
     }
 
     [data-testid="stSidebar"] {
-        background: #ffffff;
-        border-right: 1px solid #e5e7df;
+        background: #f1f3ed;
+        border-right: 1px solid #dcded6;
+        color: #20231f;
+    }
+
+    [data-testid="stSidebar"] * {
+        color: #20231f;
     }
 
     [data-testid="stSidebar"] .stCodeBlock {
-        border: 1px solid #e5e7df;
+        border: 1px solid #d7d9d0;
         border-radius: 8px;
         overflow: hidden;
     }
 
     [data-testid="stChatMessage"] {
         background: #ffffff;
-        border: 1px solid #e5e7df;
+        border: 1px solid #dcded6;
         border-radius: 8px;
         padding: 0.8rem 1rem;
-        box-shadow: 0 1px 2px rgba(25, 31, 20, 0.04);
+        color: #20231f;
+    }
+
+    [data-testid="stChatMessage"] * {
+        color: #20231f;
     }
 
     [data-testid="stChatInput"] {
         background: #ffffff;
-        border-top: 1px solid #e5e7df;
+        border-top: 1px solid #dcded6;
     }
 
     .stButton > button {
         border-radius: 8px;
-        border-color: #b8c7a3;
-        color: #23301f;
+        border-color: #aab89a;
+        background: #ffffff;
+        color: #20231f;
     }
 
     .stButton > button:hover {
-        border-color: #6f8f4f;
-        color: #1f321a;
+        border-color: #6f805e;
+        color: #20231f;
+        background: #f7f8f3;
     }
 
-    h1 {
-        color: #23301f;
+    h1, h2, h3, p, label {
+        color: #20231f;
         letter-spacing: 0;
     }
     </style>
