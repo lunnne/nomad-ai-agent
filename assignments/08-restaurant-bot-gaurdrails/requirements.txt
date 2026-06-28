@@ -1,0 +1,6 @@
+streamlit>=1.48.0
+openai>=2.41.1
+openai-agents>=0.17.5
+python-dotenv>=1.2.2
+httpx>=0.28.1
+pydantic>=2.11.0
