@@ -411,6 +411,12 @@ st.markdown(
         overflow: hidden;
     }
 
+    [data-testid="stSidebar"] .stCodeBlock,
+    [data-testid="stSidebar"] .stCodeBlock pre,
+    [data-testid="stSidebar"] .stCodeBlock code {
+        color: #f7f8f3 !important;
+    }
+
     [data-testid="stChatMessage"] {
         background: #ffffff;
         border: 1px solid #dcded6;
@@ -424,7 +430,7 @@ st.markdown(
     }
 
     [data-testid="stChatInput"] {
-        background: #faf9f6;
+        background: #f1f3ed;
         border-top: 1px solid #dcded6;
     }
 
@@ -441,9 +447,9 @@ st.markdown(
     }
 
     [data-testid="stChatInput"] textarea {
-        background: #f1f3ed;
+        background: transparent;
         color: #20231f;
-        border: 1px solid #d4d8cc;
+        border: 1px solid #c8cdbf;
         border-radius: 8px;
     }
 
@@ -453,7 +459,7 @@ st.markdown(
 
     [data-testid="stChatInput"] textarea:focus {
         border-color: #6f805e;
-        background: #f6f7f2;
+        background: transparent;
         box-shadow: none;
     }
 
