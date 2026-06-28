@@ -382,6 +382,10 @@ init_state()
 st.markdown(
     """
     <style>
+    html, body, [data-testid="stAppViewContainer"] {
+        background: #faf9f6;
+    }
+
     .stApp {
         background: #faf9f6;
         color: #20231f;
@@ -422,6 +426,18 @@ st.markdown(
     [data-testid="stChatInput"] {
         background: #ffffff;
         border-top: 1px solid #dcded6;
+    }
+
+    [data-testid="stBottom"],
+    [data-testid="stBottomBlockContainer"],
+    [data-testid="stChatFloatingInputContainer"] {
+        background: #faf9f6;
+    }
+
+    [data-testid="stBottom"] > div,
+    [data-testid="stBottomBlockContainer"] > div,
+    [data-testid="stChatFloatingInputContainer"] > div {
+        background: #faf9f6;
     }
 
     [data-testid="stChatInput"] textarea {
