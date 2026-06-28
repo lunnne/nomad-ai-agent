@@ -424,6 +424,22 @@ st.markdown(
         border-top: 1px solid #dcded6;
     }
 
+    [data-testid="stChatInput"] textarea {
+        background: #ffffff;
+        color: #20231f;
+        border: 1px solid #dcded6;
+        border-radius: 8px;
+    }
+
+    [data-testid="stChatInput"] textarea::placeholder {
+        color: #6f756b;
+    }
+
+    [data-testid="stChatInput"] textarea:focus {
+        border-color: #6f805e;
+        box-shadow: none;
+    }
+
     .stButton > button {
         border-radius: 8px;
         border-color: #aab89a;
