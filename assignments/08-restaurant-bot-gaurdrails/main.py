@@ -424,7 +424,7 @@ st.markdown(
     }
 
     [data-testid="stChatInput"] {
-        background: #ffffff;
+        background: #faf9f6;
         border-top: 1px solid #dcded6;
     }
 
@@ -441,9 +441,9 @@ st.markdown(
     }
 
     [data-testid="stChatInput"] textarea {
-        background: #ffffff;
+        background: #f1f3ed;
         color: #20231f;
-        border: 1px solid #dcded6;
+        border: 1px solid #d4d8cc;
         border-radius: 8px;
     }
 
@@ -453,6 +453,7 @@ st.markdown(
 
     [data-testid="stChatInput"] textarea:focus {
         border-color: #6f805e;
+        background: #f6f7f2;
         box-shadow: none;
     }
 
