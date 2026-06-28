@@ -23,7 +23,7 @@ from agents import (
 from agents.extensions.handoff_prompt import RECOMMENDED_PROMPT_PREFIX
 
 
-st.set_page_config(page_title="Restaurant Bot", page_icon="R", layout="centered")
+st.set_page_config(page_title="레스토랑 봇", page_icon="R", layout="centered")
 
 APP_DIR = Path(__file__).resolve().parent
 REPO_ROOT = APP_DIR.parents[1]
@@ -223,25 +223,43 @@ Return only the requested boolean fields.
 )
 
 
+AGENT_DISPLAY_NAMES = {
+    "Triage Agent": "분류 에이전트",
+    "Menu Agent": "메뉴 에이전트",
+    "Order Agent": "주문 에이전트",
+    "Reservation Agent": "예약 에이전트",
+    "Complaints Agent": "불만 처리 에이전트",
+    "Input Guardrail": "입력 가드레일",
+    "Output Guardrail": "출력 가드레일",
+    "Restaurant Bot": "레스토랑 봇",
+}
+
+
+def display_agent_name(agent_name: str) -> str:
+    return AGENT_DISPLAY_NAMES.get(agent_name, agent_name)
+
+
 def record_handoff(agent_name: str, label: str) -> None:
     st.session_state.current_agent = agent_name
-    st.session_state.handoff_messages.append(f"{label} Connected to {agent_name}.")
+    st.session_state.handoff_messages.append(
+        f"{label} 담당자인 {display_agent_name(agent_name)}에게 연결했습니다."
+    )
 
 
 def show_menu_handoff(ctx) -> None:
-    record_handoff("Menu Agent", "Menu")
+    record_handoff("Menu Agent", "메뉴")
 
 
 def show_order_handoff(ctx) -> None:
-    record_handoff("Order Agent", "Order")
+    record_handoff("Order Agent", "주문")
 
 
 def show_reservation_handoff(ctx) -> None:
-    record_handoff("Reservation Agent", "Reservation")
+    record_handoff("Reservation Agent", "예약")
 
 
 def show_complaints_handoff(ctx) -> None:
-    record_handoff("Complaints Agent", "Complaints")
+    record_handoff("Complaints Agent", "불만 처리")
 
 
 @input_guardrail
@@ -345,36 +363,90 @@ async def run_bot(user_input: str) -> tuple[str, str]:
     except InputGuardrailTripwireTriggered:
         st.session_state.current_agent = "Input Guardrail"
         return (
-            "I can only help with restaurant-related requests such as menu questions, "
-            "orders, reservations, and complaints. Please keep the message respectful "
-            "and restaurant-focused.",
+            "저는 메뉴 질문, 주문, 예약, 불만 접수처럼 레스토랑 이용과 관련된 요청만 "
+            "도와드릴 수 있습니다. 정중하고 레스토랑과 관련된 내용으로 다시 질문해 주세요.",
             "Input Guardrail",
         )
 
     except OutputGuardrailTripwireTriggered:
         st.session_state.current_agent = "Output Guardrail"
         return (
-            "Sorry, I could not generate a safe customer-facing response. "
-            "Please rephrase your restaurant request and try again.",
+            "죄송합니다. 고객에게 보여드리기 적절한 답변을 생성하지 못했습니다. "
+            "레스토랑 관련 요청을 다시 표현해 주세요.",
             "Output Guardrail",
         )
 
 
 init_state()
 
-st.title("Restaurant Bot")
-st.caption("Menu, orders, reservations, and complaints with agent handoffs and guardrails.")
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background: #f7f8f5;
+    }
+
+    [data-testid="stHeader"] {
+        background: transparent;
+    }
+
+    [data-testid="stSidebar"] {
+        background: #ffffff;
+        border-right: 1px solid #e5e7df;
+    }
+
+    [data-testid="stSidebar"] .stCodeBlock {
+        border: 1px solid #e5e7df;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    [data-testid="stChatMessage"] {
+        background: #ffffff;
+        border: 1px solid #e5e7df;
+        border-radius: 8px;
+        padding: 0.8rem 1rem;
+        box-shadow: 0 1px 2px rgba(25, 31, 20, 0.04);
+    }
+
+    [data-testid="stChatInput"] {
+        background: #ffffff;
+        border-top: 1px solid #e5e7df;
+    }
+
+    .stButton > button {
+        border-radius: 8px;
+        border-color: #b8c7a3;
+        color: #23301f;
+    }
+
+    .stButton > button:hover {
+        border-color: #6f8f4f;
+        color: #1f321a;
+    }
+
+    h1 {
+        color: #23301f;
+        letter-spacing: 0;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+st.title("오늘 뭐 드실래요?")
+st.caption("메뉴 추천부터 주문, 예약, 불만 접수까지 알맞은 담당자가 빠르게 받아드립니다.")
 
 with st.sidebar:
-    st.subheader("Current Agent")
-    st.success(st.session_state.current_agent)
+    st.subheader("현재 담당")
+    st.success(display_agent_name(st.session_state.current_agent))
     st.divider()
-    st.write("Try:")
+    st.write("예시:")
     st.code("김치찌개에 돼지고기가 들어가나요? 채식 메뉴도 있나요?")
     st.code("비빔밥 2개랑 콜라 1개 주문하고 싶어요.")
     st.code("내일 저녁 7시에 4명 예약하고 싶어요.")
     st.code("음식이 너무 늦게 나왔고 직원 응대가 불친절했어요.")
-    if st.button("Clear chat", use_container_width=True):
+    if st.button("대화 지우기", use_container_width=True):
         st.session_state.messages = []
         st.session_state.handoff_messages = []
         st.session_state.current_agent = "Triage Agent"
@@ -383,7 +455,9 @@ with st.sidebar:
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         if message["role"] == "assistant":
-            st.caption(f"Responding agent: {message.get('agent', 'Restaurant Bot')}")
+            st.caption(
+                f"응답 담당: {display_agent_name(message.get('agent', 'Restaurant Bot'))}"
+            )
         st.write(message["content"])
 
 user_input = st.chat_input("레스토랑 이용과 관련해 무엇을 도와드릴까요?")
@@ -397,13 +471,13 @@ if user_input:
     st.session_state.handoff_messages = []
 
     with st.chat_message("assistant"):
-        with st.spinner("Routing to the right restaurant specialist..."):
+        with st.spinner("알맞은 담당자에게 연결하는 중입니다..."):
             final_answer, responding_agent = asyncio.run(run_bot(user_input))
 
         for handoff_message in st.session_state.handoff_messages:
             st.info(handoff_message)
 
-        st.caption(f"Responding agent: {responding_agent}")
+        st.caption(f"응답 담당: {display_agent_name(responding_agent)}")
         st.write(final_answer)
 
     st.session_state.messages.append(
